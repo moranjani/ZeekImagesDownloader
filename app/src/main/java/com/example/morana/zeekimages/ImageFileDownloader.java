@@ -22,23 +22,20 @@ import java.util.concurrent.Future;
 public class ImageFileDownloader {
     private static final String TAG = ImageFileDownloader.class.getName();
 
-//    private static ImageFileDownloader INSTANCE = new ImageFileDownloader();
-//
-//    private ImageFileDownloader() {}
-//
-//    public static ImageFileDownloader getInstance(){
-//        return INSTANCE;
-//    }
+    private static ImageFileDownloader INSTANCE = new ImageFileDownloader();
+
+    private ImageFileDownloader() {
+        executor = Executors.newCachedThreadPool();
+        imagesMap = new HashMap<>();
+    }
+
+    public static ImageFileDownloader getInstance(){
+        return INSTANCE;
+    }
 
 
     ExecutorService executor;
     HashMap<String, Bitmap> imagesMap;
-
-
-    public ImageFileDownloader() {
-        executor = Executors.newCachedThreadPool();
-        imagesMap = new HashMap<>();
-    }
 
 
     private static Bitmap getBitmapFromURL(String src) {
@@ -108,6 +105,7 @@ public class ImageFileDownloader {
     public void getBitmapForUrl(String urlString, WeakReference<Listener> listener) {
         Bitmap bitmap = imagesMap.get(urlString);
         if (bitmap != null) {
+            Log.d(TAG, "BAMM have it in my cache!!!");
             notifyListener(listener, urlString, bitmap);
         } else {
             downloadBitmap(urlString, listener);
