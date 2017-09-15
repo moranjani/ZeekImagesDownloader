@@ -105,7 +105,7 @@ public class ImageFileDownloader {
     public void getBitmapForUrl(String urlString, WeakReference<Listener> listener) {
         Bitmap bitmap = imagesMap.get(urlString);
         if (bitmap != null) {
-            Log.d(TAG, "BAMM have it in my cache!!!");
+            Log.d(TAG, "BAMM had it in my cache!!!");
             notifyListener(listener, urlString, bitmap);
         } else {
             downloadBitmap(urlString, listener);
