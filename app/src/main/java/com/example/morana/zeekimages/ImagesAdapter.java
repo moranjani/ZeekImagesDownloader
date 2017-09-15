@@ -17,9 +17,6 @@ import java.util.Arrays;
  */
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewHolder> implements ImageFileDownloader.Listener {
 
-    private static final String puppyUrl = "http://www.directexpose.com/wp-content/uploads/2017/03/The_23_Cutest_Dog_Breeds_Youve_Never_Even_Heard_Of_3223_5026-e1488937090793.jpg";
-    private static final String flowerUrl = "https://static.pexels.com/photos/36764/marguerite-daisy-beautiful-beauty.jpg";
-
     ArrayList<String> urlPositionList;
     ArrayMap<String, Bitmap> urlsForDownload;
 
@@ -31,7 +28,8 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
 
 
     private void prepareDataSet() {
-        String[] urls = {puppyUrl, flowerUrl, flowerUrl, flowerUrl, puppyUrl, puppyUrl, puppyUrl, flowerUrl};
+        String[] urls = {UrlUtil.one , UrlUtil.two, UrlUtil.three, UrlUtil.four, UrlUtil.five, UrlUtil.six}; /* UrlUtil.seven,
+                UrlUtil.eight, UrlUtil.nine, UrlUtil.ten, UrlUtil.eleven, UrlUtil.twelve};*/
         urlPositionList = new ArrayList<>(Arrays.asList(urls));
         urlsForDownload = new ArrayMap<>();
         for (String url : urls) {
@@ -67,8 +65,8 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
         View imageView = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_item, parent, false);
 
         ImageViewHolder viewHolder = new ImageViewHolder(imageView);
-        int height = parent.getMeasuredWidth() / 4;
-        imageView.setMinimumHeight(height);
+        int height = UrlUtil.getScreenHeight(parent.getContext()) / 6;
+        imageView.getLayoutParams().height = height;
         return viewHolder;
     }
 
