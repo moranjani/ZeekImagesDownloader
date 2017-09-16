@@ -1,4 +1,4 @@
-package com.example.morana.zeekimages;
+package com.example.morana.zeekimages.ui;
 
 import android.app.Fragment;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.morana.zeekimages.ui.ImagesAdapter;
+import com.example.morana.zeekimages.R;
 
 /**
  * Created by Morana on 9/15/2017.
@@ -22,16 +25,10 @@ public class ImagesGalleryFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.images_fragment, container, false);
-
         mRecyclerView = view.findViewById(R.id.images_recycler_view);
         mAdapter = new ImagesAdapter();
-        //mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(SPAN_COUNT, StaggeredGridLayoutManager.VERTICAL));
-        //mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), SPAN_COUNT));
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-
         mRecyclerView.setAdapter(mAdapter);
-
-
         return view;
     }
 

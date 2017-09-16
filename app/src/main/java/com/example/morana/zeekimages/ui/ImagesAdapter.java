@@ -1,51 +1,38 @@
-package com.example.morana.zeekimages;
+package com.example.morana.zeekimages.ui;
 
-import android.graphics.Bitmap;
-import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
-import java.lang.ref.WeakReference;
+import com.example.morana.zeekimages.R;
+import com.example.morana.zeekimages.Utility.Util;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
  * Created by Morana on 9/15/2017.
  */
-public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewHolder> implements ImageFileDownloader.Listener {
+public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewHolder>  {
 
+    private static final String TAG = ImagesAdapter.class.getSimpleName();
     ArrayList<String> urlPositionList;
-    ArrayMap<String, Bitmap> urlsForDownload;
+    DownloadOrganizer downloadOrganizer;
 
 
     public ImagesAdapter() {
+        downloadOrganizer = new DownloadOrganizer();
         prepareDataSet();
     }
 
 
 
     private void prepareDataSet() {
-        String[] urls = {UrlUtil.one , UrlUtil.two, UrlUtil.three, UrlUtil.four, UrlUtil.five, UrlUtil.six}; /* UrlUtil.seven,
-                UrlUtil.eight, UrlUtil.nine, UrlUtil.ten, UrlUtil.eleven, UrlUtil.twelve};*/
+        String[] urls = {Util.one , Util.two, Util.three, Util.four, Util.five, Util.six, Util.seven,
+                Util.eight, Util.nine, Util.ten, Util.eleven, Util.twelve};
         urlPositionList = new ArrayList<>(Arrays.asList(urls));
-        urlsForDownload = new ArrayMap<>();
-        for (String url : urls) {
-            urlsForDownload.put(url, null);
-        }
-        for (String url : urlsForDownload.keySet()) {
-            ImageFileDownloader.getInstance().getBitmapForUrl(url, new WeakReference<ImageFileDownloader.Listener>(this));
-        }
-    }
-
-    @Override
-    public void onBitmapDownloaded(String downloadedUrl, Bitmap bitmap) {
-        if (urlsForDownload.containsKey(downloadedUrl)) {
-            urlsForDownload.put(downloadedUrl, bitmap);
-        }
-        notifyDataSetChanged();
     }
 
 
@@ -56,7 +43,6 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
             super(view);
             image = view.findViewById(R.id.image_item_view);
         }
-
     }
 
 
@@ -65,7 +51,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
         View imageView = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_item, parent, false);
 
         ImageViewHolder viewHolder = new ImageViewHolder(imageView);
-        int height = UrlUtil.getScreenHeight(parent.getContext()) / 6;
+        int height = Util.getScreenHeight(parent.getContext()) / 6;
         imageView.getLayoutParams().height = height;
         return viewHolder;
     }
@@ -73,10 +59,7 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
         String imageUrl = urlPositionList.get(position);
-        Bitmap bitmap = urlsForDownload.get(imageUrl);
-        if (bitmap!=null) {
-            holder.image.setImageBitmap(bitmap);
-        }
+        downloadOrganizer.getImageIntoView(imageUrl, holder.image);
     }
 
     @Override

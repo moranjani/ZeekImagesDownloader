@@ -12,7 +12,7 @@
 
     <fragment
         android:id="@+id/images_gallery_fragment"
-        class="com.example.morana.zeekimages.ImagesGalleryFragment"
+        class="com.example.morana.zeekimages.ui.ImagesGalleryFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
