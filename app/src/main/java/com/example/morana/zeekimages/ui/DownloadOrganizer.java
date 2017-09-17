@@ -12,8 +12,8 @@ public class DownloadOrganizer  {
 
     private static ArrayList<ImageRequest> requests = new ArrayList<>();
 
-    public static void getImageIntoView(String imageUrl, ImageView image) {
-        ImageRequest request = new ImageRequest(imageUrl, new WeakReference<ImageView>(image));
+    public static void getImageIntoView(String imageUrl, ImageView imageView) {
+        ImageRequest request = new ImageRequest(imageUrl, new WeakReference<ImageView>(imageView));
         requests.add(request);
         request.fetch();
     }

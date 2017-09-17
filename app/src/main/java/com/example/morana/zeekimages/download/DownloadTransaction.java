@@ -1,10 +1,11 @@
 package com.example.morana.zeekimages.download;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+
+import com.example.morana.zeekimages.Utility.DecodingUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -113,7 +114,8 @@ public class DownloadTransaction implements Runnable {
             connection.setDoInput(true);
             connection.connect();
             inputStream = connection.getInputStream();
-            bitmap = BitmapFactory.decodeStream(inputStream);
+            bitmap = DecodingUtil.decodeSampledBitmapFromStream(url, inputStream, DecodingUtil.reqWidth, DecodingUtil.reqHeight);
+            //bitmap = BitmapFactory.decodeStream(inputStream);
         } catch (IOException e) {
             Log.e(TAG, "getBitmapFromURL:", e);
             return null;

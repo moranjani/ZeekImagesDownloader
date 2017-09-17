@@ -1,5 +1,6 @@
 package com.example.morana.zeekimages.download;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.support.v4.util.ArrayMap;
 import android.util.Log;
@@ -15,35 +16,49 @@ public class ImageFileDownloader {
     private static final String TAG = ImageFileDownloader.class.getSimpleName();
 
     private static ImageFileDownloader INSTANCE = new ImageFileDownloader();
+    private Context context;
     private ExecutorService executor;
-    private ArrayMap<String, Bitmap> imagesCache;
     private ArrayMap<String, DownloadTransaction> downloadingMap;
+    private ImagesCache cache;
     private Object cacheLock = new Object();
 
     private ImageFileDownloader() {
         executor = Executors.newCachedThreadPool();
-        imagesCache = new ArrayMap<>();
         downloadingMap = new ArrayMap<>();
+        cache = new ImagesCache(context);
     }
 
     public static ImageFileDownloader getInstance(){
         return INSTANCE;
     }
 
+    public void init(Context context) {
+        this.context = context;
+    }
 
+
+    /**
+     * Returns a bitmap that corresponds to the urlString, either from the cache or downloaded from web
+     * @param urlString
+     * @param listenerRef
+     */
     public void getBitmapForUrl(String urlString, WeakReference<TransactionListener> listenerRef) {
         if (listenerRef == null) return;
         TransactionListener listener = listenerRef.get();
         if (listener == null) return;
 
-        Bitmap bitmap = fetchImageFromCache(urlString);
+        Bitmap bitmap = cache.getBitmapFromCache(urlString);
         if (bitmap != null) {
-            Log.d(TAG, "BAM! had it in cache!");
+            Log.d(TAG, "DONE! had it in cache!");
             listener.onBitmapDownloaded(urlString, bitmap);
         } else {
-            Log.d(TAG, "Url was not found in cache. Will notify once downloaded..");
+            Log.d(TAG, "DOWNLOADING... Url was not found in cache. Will notify once downloaded..");
             downloadBitmap(urlString, listenerRef);
         }
+    }
+
+    public void addDownloadedImageToCache(String urlForDownload, Bitmap bitmap) {
+        cache.addBitmapToCache(urlForDownload, bitmap);
     }
 
 
@@ -80,19 +95,6 @@ public class ImageFileDownloader {
     }
 
 
-    // CACHE OPERATIONS
-
-    private Bitmap fetchImageFromCache(String urlString) {
-        synchronized (cacheLock) {
-            return imagesCache.get(urlString);
-        }
-    }
-
-    public void addDownloadedImageToCache(String url, Bitmap bitmap) {
-        synchronized(cacheLock) {
-            imagesCache.put(url, bitmap);
-        }
-    }
 
 
     public interface TransactionListener {

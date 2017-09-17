@@ -17,9 +17,8 @@ import java.util.Arrays;
  */
 public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewHolder>  {
 
-    private static final String TAG = ImagesAdapter.class.getSimpleName();
-    ArrayList<String> urlPositionList;
-    DownloadOrganizer downloadOrganizer;
+    private ArrayList<String> urlPositionList;
+    private DownloadOrganizer downloadOrganizer;
 
 
     public ImagesAdapter() {
@@ -49,15 +48,16 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ImageViewH
     @Override
     public ImageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View imageView = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_item, parent, false);
-
         ImageViewHolder viewHolder = new ImageViewHolder(imageView);
         int height = Util.getScreenHeight(parent.getContext()) / 6;
+
         imageView.getLayoutParams().height = height;
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(ImageViewHolder holder, int position) {
+        holder.image.setImageResource(R.drawable.placeholder_image);
         String imageUrl = urlPositionList.get(position);
         downloadOrganizer.getImageIntoView(imageUrl, holder.image);
     }
