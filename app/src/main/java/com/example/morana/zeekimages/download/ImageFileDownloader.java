@@ -20,12 +20,9 @@ public class ImageFileDownloader {
     private ExecutorService executor;
     private ArrayMap<String, DownloadTransaction> downloadingMap;
     private ImagesCache cache;
-    private Object cacheLock = new Object();
 
     private ImageFileDownloader() {
-        executor = Executors.newCachedThreadPool();
-        downloadingMap = new ArrayMap<>();
-        cache = new ImagesCache(context);
+
     }
 
     public static ImageFileDownloader getInstance(){
@@ -34,6 +31,9 @@ public class ImageFileDownloader {
 
     public void init(Context context) {
         this.context = context;
+        executor = Executors.newCachedThreadPool();
+        downloadingMap = new ArrayMap<>();
+        cache = new ImagesCache(context, executor);
     }
 
 

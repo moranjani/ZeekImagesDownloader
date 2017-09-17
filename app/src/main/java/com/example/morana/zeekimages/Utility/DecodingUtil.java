@@ -13,8 +13,8 @@ import java.net.URL;
  */
 public class DecodingUtil {
 
-    public static final int reqWidth = 500;
-    public static final int reqHeight = 200;
+    public static final int reqWidth = 500; //required width for decoded bitmap
+    public static final int reqHeight = 200; //required height for decoded bitmap
 
 
     /**

@@ -114,8 +114,8 @@ public class DownloadTransaction implements Runnable {
             connection.setDoInput(true);
             connection.connect();
             inputStream = connection.getInputStream();
-            bitmap = DecodingUtil.decodeSampledBitmapFromStream(url, inputStream, DecodingUtil.reqWidth, DecodingUtil.reqHeight);
-            //bitmap = BitmapFactory.decodeStream(inputStream);
+            bitmap = DecodingUtil.decodeSampledBitmapFromStream(url, inputStream
+                    , DecodingUtil.reqWidth, DecodingUtil.reqHeight);
         } catch (IOException e) {
             Log.e(TAG, "getBitmapFromURL:", e);
             return null;
