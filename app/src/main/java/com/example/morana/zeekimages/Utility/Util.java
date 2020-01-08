@@ -10,11 +10,11 @@ import android.view.WindowManager;
  */
 public class Util {
     public static final String one = "https://previews.123rf.com/images/hydognik/hydognik1105/hydognik110500008/9483336-Metal-Number-1-with-a-silvery-fringing-on-a-red-background-Stock-Photo.jpg";
-    public static final String two = "http://www.allfree-clipart.com/Food/two-cherries.jpg";
+    public static final String two = "http://clipart-library.com/data_images/356147.png";
     public static final String three = "http://media.gizmodo.co.uk/wp-content/uploads/2013/02/Three-4G.jpg";
-    public static final String four = "http://online2.byu.edu/wp-content/uploads/2013/05/number-four-500x295.jpg";
+    public static final String four = "http://clipart-library.com/data_images/38719.png";
     public static final String five = "https://ak3.picdn.net/shutterstock/videos/5243/thumb/1.jpg?i10c=img.resize(height:160)";
-    public static final String six = "http://www.privacyanddatasecurityinsight.com/files/2015/09/Six.jpg";
+    public static final String six = "http://clipart-library.com/image_gallery/422843.png";
     public static final String seven = "https://vignette2.wikia.nocookie.net/spongefan/images/b/b9/Hand-7-seven.jpg/revision/latest?cb=20140323150027";
     public static final String eight = "https://openclipart.org/image/2400px/svg_to_png/71137/eight.png";
     public static final String nine = "http://cdn.images.express.co.uk/img/dynamic/109/590x/Nine-603820.jpg";
